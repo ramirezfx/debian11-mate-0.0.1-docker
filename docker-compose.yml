@@ -1,0 +1,16 @@
+version: '3'
+services:
+  mate-desktop-lmu:
+    shm_size: "2gb"
+    environment:
+    - PASSWORD=mate
+    - USER=mate
+    cap_add:
+    - SYS_PTRACE
+    image: ramirezfx/debian11-mate-001:latest
+    restart: always
+    stdin_open: true
+    tty: true
+    ports:
+    - 4000:4000/tcp
+    - 2222:22/tcp
