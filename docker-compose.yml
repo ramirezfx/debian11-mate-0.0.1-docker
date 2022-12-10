@@ -1,16 +1,26 @@
 version: '3'
 services:
-  mate-desktop-lmu:
+  mate-desktop:
+    security_opt:
+    - seccomp:unconfined
     shm_size: "2gb"
     environment:
-    - PASSWORD=mate
-    - USER=mate
+    - USER={{ USERNAME }}
+    - PASSWORD={{ PASSWORD }}
+    - KBD_LANG={{ KBD_LANG }}
+    - LANG={{ LANG }}
+    - TZ={{ TIMEZONE }}
     cap_add:
     - SYS_PTRACE
-    image: ramirezfx/debian11-mate-001:latest
+    image: ramirezfx/debian-arm64-desktop:{{ VERSION }}
     restart: always
     stdin_open: true
     tty: true
     ports:
-    - 4000:4000/tcp
-    - 2222:22/tcp
+    - {{ NOMACHINE_PORT }}:4000/tcp
+    - {{ X2GO_PORT }}:22/TCP
+    volumes:
+    - mate-desktop:/data
+volumes:
+  mate-desktop:
+    driver: local
