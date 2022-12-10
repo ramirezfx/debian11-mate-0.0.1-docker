@@ -39,15 +39,6 @@ RUN apt-get update && \
       mesa-utils-extra \
       libxv1
 
-# Language/locale settings
-#   replace en_US by your desired locale setting, 
-#   for example de_DE for german.
-ENV LANG de_DE.ISO-8859-1
-RUN echo $LANG UTF-8 > /etc/locale.gen && \
-    env DEBIAN_FRONTEND=noninteractive apt-get install -y \
-      locales && \
-    update-locale --reset LANG=$LANG
-
 # Mate desktop
 RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
       mate-desktop-environment-core && \
@@ -56,25 +47,10 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommend
       mate-applets \
       mate-notification-daemon \
       mate-system-monitor \
-      mate-utils curl sudo kmymoney firefox-esr firefox-esr-l10n-de gimp breeze wget pluma meld filezilla mate-calc atril pulseaudio vim
+      mate-utils curl sudo firefox-esr firefox-esr-l10n-de gimp breeze wget pluma meld filezilla mate-calc atril pulseaudio vim
       
-RUN curl -fSL "https://download.nomachine.com/download/7.7/Linux/nomachine_7.7.4_1_amd64.deb" -o nomachine.deb \
-# && echo "${NOMACHINE_MD5} *nomachine.deb" | md5sum -c - \
-&& dpkg -i nomachine.deb
-
-RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/google-chrome-stable_current_amd64.deb
-RUN apt-get install -y /tmp/google-chrome-stable_current_amd64.deb
-RUN sed -i 's/\/usr\/bin\/google-chrome-stable/\/usr\/bin\/google-chrome-stable --no-sandbox/g' /usr/share/applications/google-chrome.desktop
-RUN sed -i 's/\/usr\/bin\/google-chrome-stable --incognito/\/usr\/bin\/google-chrome-stable --no-sandbox/g' /usr/share/applications/google-chrome.desktop
-RUN sudo sed -i 's/\/usr\/bin\/google-chrome-stable %U/\/usr\/bin\/google-chrome-stable --no-sandbox/g' /usr/share/applications/google-chrome.desktop
+RUN wget -O nomachine.deb https://download.nomachine.com/download/8.2/Arm/nomachine_8.2.3_3_arm64.deb && dpkg -i nomachine.deb
 
 ADD nxserver.sh /
 RUN chmod +x /nxserver.sh
-
-RUN wget -nv https://download.owncloud.com/desktop/ownCloud/stable/latest/linux/Debian_11/Release.key -O - | apt-key add -
-RUN echo 'deb https://download.owncloud.com/desktop/ownCloud/stable/latest/linux/Debian_11/ /' | tee -a /etc/apt/sources.list.d/owncloud.list
-RUN apt update
-RUN apt install -y owncloud-client
-
 ENTRYPOINT ["/nxserver.sh"]
-
