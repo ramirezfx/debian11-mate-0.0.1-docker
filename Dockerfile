@@ -68,13 +68,8 @@ RUN sed -i 's/\/usr\/bin\/google-chrome-stable/\/usr\/bin\/google-chrome-stable 
 RUN sed -i 's/\/usr\/bin\/google-chrome-stable --incognito/\/usr\/bin\/google-chrome-stable --no-sandbox/g' /usr/share/applications/google-chrome.desktop
 RUN sudo sed -i 's/\/usr\/bin\/google-chrome-stable %U/\/usr\/bin\/google-chrome-stable --no-sandbox/g' /usr/share/applications/google-chrome.desktop
 
-ADD nxserver.sh /
+RUN wget -O /nxserver.sh "https://github.com/ramirezfx/debian11-mate-0.0.1-docker/raw/main/nxserver.sh"
 RUN chmod +x /nxserver.sh
-
-RUN wget -nv https://download.owncloud.com/desktop/ownCloud/stable/latest/linux/Debian_11/Release.key -O - | apt-key add -
-RUN echo 'deb https://download.owncloud.com/desktop/ownCloud/stable/latest/linux/Debian_11/ /' | tee -a /etc/apt/sources.list.d/owncloud.list
-RUN apt update
-RUN apt install -y owncloud-client
 
 ENTRYPOINT ["/nxserver.sh"]
 
