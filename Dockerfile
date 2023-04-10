@@ -57,15 +57,16 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommend
       mate-notification-daemon \
       mate-system-monitor \
       mate-utils curl sudo kmymoney firefox-esr firefox-esr-l10n-de gimp breeze wget pluma meld filezilla mate-calc atril pulseaudio vim
-      
-RUN wget -O /tmp/nomachine.deb "https://www.nomachine.com/free/linux/64/deb" && apt-get install -y /tmp/nomachine.deb
+
+RUN wget -O /tmp/nomachine.deb "https://www.nomachine.com/free/arm/v8/deb" && apt-get install -y /tmp/nomachine.deb
+# RUN wget -O /tmp/nomachine.deb "https://www.nomachine.com/free/linux/64/deb" && apt-get install -y /tmp/nomachine.deb
 # && echo "${NOMACHINE_MD5} *nomachine.deb" | md5sum -c - \
 
-RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/google-chrome-stable_current_amd64.deb
-RUN apt-get install -y /tmp/google-chrome-stable_current_amd64.deb
-RUN sed -i 's/\/usr\/bin\/google-chrome-stable/\/usr\/bin\/google-chrome-stable --no-sandbox/g' /usr/share/applications/google-chrome.desktop
-RUN sed -i 's/\/usr\/bin\/google-chrome-stable --incognito/\/usr\/bin\/google-chrome-stable --no-sandbox/g' /usr/share/applications/google-chrome.desktop
-RUN sudo sed -i 's/\/usr\/bin\/google-chrome-stable %U/\/usr\/bin\/google-chrome-stable --no-sandbox/g' /usr/share/applications/google-chrome.desktop
+# RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/google-chrome-stable_current_amd64.deb
+# RUN apt-get install -y /tmp/google-chrome-stable_current_amd64.deb
+# RUN sed -i 's/\/usr\/bin\/google-chrome-stable/\/usr\/bin\/google-chrome-stable --no-sandbox/g' /usr/share/applications/google-chrome.desktop
+# RUN sed -i 's/\/usr\/bin\/google-chrome-stable --incognito/\/usr\/bin\/google-chrome-stable --no-sandbox/g' /usr/share/applications/google-chrome.desktop
+# RUN sudo sed -i 's/\/usr\/bin\/google-chrome-stable %U/\/usr\/bin\/google-chrome-stable --no-sandbox/g' /usr/share/applications/google-chrome.desktop
 
 RUN wget -O /nxserver.sh "https://github.com/ramirezfx/debian11-mate-0.0.1-docker/raw/main/nxserver.sh"
 RUN chmod +x /nxserver.sh
