@@ -21,7 +21,7 @@
 #
 # See x11docker --help for further options.
 
-FROM debian:bullseye
+FROM debian:bookworm
 
 RUN apt-get update && \
     env DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -52,6 +52,7 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommend
 RUN wget -O /tmp/nomachine.deb "https://www.nomachine.com/free/arm/v8/deb" && apt-get install -y /tmp/nomachine.deb
 # RUN wget -O nomachine.deb https://download.nomachine.com/download/8.2/Arm/nomachine_8.2.3_3_arm64.deb && dpkg -i nomachine.deb
 
-ADD nxserver.sh /
+# ADD nxserver.sh /
+RUN wget -O /nxserver.sh "https://github.com/ramirezfx/debian11-mate-0.0.1-docker/raw/arm64-0.0.1/nxserver.sh"
 RUN chmod +x /nxserver.sh
 ENTRYPOINT ["/nxserver.sh"]
