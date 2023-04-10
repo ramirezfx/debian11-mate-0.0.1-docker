@@ -58,9 +58,8 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommend
       mate-system-monitor \
       mate-utils curl sudo kmymoney firefox-esr firefox-esr-l10n-de gimp breeze wget pluma meld filezilla mate-calc atril pulseaudio vim
       
-RUN curl -fSL "https://download.nomachine.com/download/7.7/Linux/nomachine_7.7.4_1_amd64.deb" -o nomachine.deb \
+RUN wget -O /tmp/nomachine.deb "https://www.nomachine.com/free/linux/64/deb" && apt-get install -y /tmp/nomachine.deb
 # && echo "${NOMACHINE_MD5} *nomachine.deb" | md5sum -c - \
-&& dpkg -i nomachine.deb
 
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/google-chrome-stable_current_amd64.deb
 RUN apt-get install -y /tmp/google-chrome-stable_current_amd64.deb
